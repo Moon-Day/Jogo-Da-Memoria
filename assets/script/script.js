@@ -1,78 +1,86 @@
-const FRONT = "card_front";
-const BACK = "card_back";
-const CARD =  "card";
-const ICON = "icon";
+const FRONT = "card_front"
+const BACK = "card_back"
+const CARD = "card"
+const ICON = "icon"
 
+startGame();
 
-
-
-    startGame();
-
-function startGame(){
-    cards = createCardFromTechs(techs);
-    shuffleCard(cards);
-    initializeCards(cards);
+function startGame() {
+    initializeCards(game.createCardsFromTechs());
 }
 
-function initializeCards(cards){
+function initializeCards(cards) {
     let gameBoard = document.getElementById("gameBoard");
-   
-    cards.forEach((card) =>{
+    gameBoard.innerHTML = '';
+    game.cards.forEach(card => {
 
-        let cardElement = document.createElement("div");
+        let cardElement = document.createElement('div');
         cardElement.id = card.id;
         cardElement.classList.add(CARD);
-        cardElement.dataset = card.icon;
+        cardElement.dataset.icon = card.icon;
 
         createCardContent(card, cardElement);
 
-        cardElement.addEventListener("click", flipCard)
+        cardElement.addEventListener('click', flipCard)
         gameBoard.appendChild(cardElement);
-
-
     })
-
-
 }
 
-function createCardContent(card, cardElement){
+function createCardContent(card, cardElement) {
 
-    createCardFace(FRONT, card, cardElement );
+    createCardFace(FRONT, card, cardElement);
     createCardFace(BACK, card, cardElement);
 
 
 }
 
-function createCardFace(face, card, element){
+function createCardFace(face, card, element) {
 
-    let cardElementFace = document.createElement("div");
+    let cardElementFace = document.createElement('div');
     cardElementFace.classList.add(face);
-    if(face === FRONT){
-        let iconElement = document.createElement("img");
-        iconElement.classList.add(ICON)
+    if (face === FRONT) {
+        let iconElement = document.createElement('img');
+        iconElement.classList.add(ICON);
         iconElement.src = "./assets/img/" + card.icon + ".png";
         cardElementFace.appendChild(iconElement);
-    }else{
+    } else {
         cardElementFace.innerHTML = "&lt/&gt";
     }
     element.appendChild(cardElementFace);
-
 }
-
-
-function shuffleCard(cards){
-    let currentIndex = cards.length;
-    let randomIndex;
- // !== diferente
-    while (currentIndex !== 0) {
-            randomIndex = Math.floor(Math.random() * currentIndex);
-            currentIndex--;
-            [cards[randomIndex], cards[currentIndex]] = [cards[currentIndex], cards[randomIndex]];
-        }
-}
-
 
 
 function flipCard() {
-    this.classList.add("flip")
+
+    if (game.setCard(this.id)) {
+
+        this.classList.add("flip");
+        if (game.secondCard) {
+            if (game.checkMatch()) {
+                game.clearCards();
+                if (game.checkGameOver()) {
+                    let gameOverLayer = document.getElementById("gameOver");
+                    gameOverLayer.style.display = 'flex';
+                }
+            } else {
+                setTimeout(() => {
+                    let firstCardView = document.getElementById(game.firstCard.id);
+                    let secondCardView = document.getElementById(game.secondCard.id);
+
+                    firstCardView.classList.remove('flip');
+                    secondCardView.classList.remove('flip');
+                    game.unflipCards();
+                }, 1000);
+
+            };
+        }
+    }
+
+}
+
+function restart() {
+    game.clearCards();
+    startGame();
+    let gameOverLayer = document.getElementById("gameOver");
+    gameOverLayer.style.display = 'none';
 }
