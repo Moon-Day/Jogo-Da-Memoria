@@ -3,13 +3,13 @@
 let game = {
 
     lockMode: false,
-    //
+    //modo de bloqueio
     //lockMode: Uma flag que indica se o jogo está bloqueado ou não. Quando está true, impede que as cartas sejam viradas.
 
     firstCard: null,
-    //
+    //primeira carta
     secondCard: null,
-    //
+    //segunda carta
     //firstCard e secondCard: Representam as duas cartas selecionadas pelo jogador para verificar se são iguais.
     
 
@@ -28,7 +28,7 @@ let game = {
     cards: null,
 
     setCard: function (id) {
-    //    
+    //definir carta
         //Método setCard:Recebe o id de uma carta selecionada pelo jogador.
         //Filtra a lista de cartas para encontrar a carta correspondente ao id.
         let card = this.cards.filter(card => card.id === id)[0];
@@ -56,7 +56,7 @@ let game = {
     },
 
     checkMatch: function () {
-     //   
+     //verificação das cartas
         if (!this.firstCard || !this.secondCard) {
             return false;
         }
@@ -65,14 +65,14 @@ let game = {
     },
 
     clearCards: function () {
-    //    
+    //limpar cartas    
         this.firstCard = null;
         this.secondCard = null;
         this.lockMode = false;
         //Método clearCards: Limpa as variáveis firstCard e secondCard, bem como o modo de bloqueio.
     },
     unflipCards() {
-    //    
+    //   
         this.firstCard.flipped = false;
         this.secondCard.flipped = false;
         this.clearCards();
@@ -80,7 +80,7 @@ let game = {
     },
 
     checkGameOver() {
-
+        //checagem de fim do jogo
         return this.cards.filter(card => !card.flipped).length == 0;
         //Filtra as cartas que ainda não foram viradas (!card.flipped).
         //Retorna true se não houver mais cartas não viradas, indicando que o jogo acabou.
@@ -91,7 +91,7 @@ let game = {
 
 
     createCardsFromTechs: function () {
-    //    
+    //criação de cartas e tecnologias(nome das cartas)    
         this.cards = [];
 
         this.techs.forEach((tech) => {
@@ -104,7 +104,7 @@ let game = {
     },
 
     createPairFromTech: function (tech) {
-
+       //cria duas cartas iguais  
         return [{
             id: this.createIdWithTech(tech),
             icon: tech,
@@ -118,11 +118,13 @@ let game = {
     },
 
     createIdWithTech: function (tech) {
+        //criar id por tecnologia
         return tech + parseInt(Math.random() * 1000);
         //Gera um id único para uma carta com base na tecnologia e em um número aleatório.
     },
 
     shuffleCards: function (cards) {
+     //embaralhar as cartas   
         let currentIndex = this.cards.length;
         let randomIndex = 0;
 
