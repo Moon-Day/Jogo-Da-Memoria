@@ -2,19 +2,20 @@
  link para o projeto :https://moon-day.github.io/Jogo-Da-Memoria.github.io/
  conteudo do projeto:
  
- 1.Propriedades do objeto game:
+ 1.Propriedades do objeto game:<br>
 
 lockMode: Uma flag que indica se o jogo está bloqueado ou não. Quando está true, impede que as cartas sejam viradas.
 firstCard e secondCard: Representam as duas cartas selecionadas pelo jogador para verificar se são iguais.
 techs: Uma lista de tecnologias usadas no jogo. Cada tecnologia será associada a um par de cartas.
 cards: Armazena todas as cartas do jogo.
 
- 2.Método setCard:
+ 2.Método setCard:<br>
 Recebe o id de uma carta selecionada pelo jogador.
 Filtra a lista de cartas para encontrar a carta correspondente ao id.
 Se a carta já estiver virada (flipped) ou o modo de bloqueio estiver ativado (lockMode), a função retorna false, indicando que a ação não foi válida.
 Se a variável firstCard ainda não estiver definida, a carta selecionada é atribuída a firstCard e marcada como virada (flipped). A função retorna true para indicar que a ação foi bem-sucedida.
 Caso contrário, a carta selecionada é atribuída a secondCard e marcada como virada (flipped). O modo de bloqueio é ativado e a função retorna true.
+
 Método checkMatch:
 
 Verifica se firstCard e secondCard estão definidos.
